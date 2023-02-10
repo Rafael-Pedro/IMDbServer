@@ -8,5 +8,4 @@ public class Vote : Entity
     public Users User { get; set; }
     public int MovieId { get; set; }
     public Movies Movie { get; set; }
-
 }

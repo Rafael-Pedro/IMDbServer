@@ -1,6 +1,8 @@
-﻿namespace IMDb.Server.Domain.Entities;
+﻿using IMDb.Server.Domain.Entities.Abstract;
 
-public class GenresMovies
+namespace IMDb.Server.Domain.Entities;
+
+public class GenresMovies : Entity
 {
     public Genres Genres { get; set; }
     public int GenresId { get; set; }
