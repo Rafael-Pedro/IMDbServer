@@ -4,6 +4,6 @@ namespace IMDb.Server.Domain.Entities
 {
     public class Users : User
     {
-        public IEnumerable<Vote> Votes { get; set; }
+        public IEnumerable<Vote> Votes { get; set; } = Array.Empty<Vote>();
     }
 }
