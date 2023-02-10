@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IMDb.Server.Domain\IMDb.Server.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

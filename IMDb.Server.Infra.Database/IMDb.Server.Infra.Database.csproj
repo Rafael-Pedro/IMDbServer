@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IMDb.Server.Infra.Database.Abstraction\IMDb.Server.Infra.Database.Abstraction.csproj" />
+  </ItemGroup>
+
 </Project>
