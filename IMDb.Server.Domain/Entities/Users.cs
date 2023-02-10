@@ -2,8 +2,13 @@
 
 namespace IMDb.Server.Domain.Entities
 {
-    public class Users : User
+    public class Users : Entity
     {
-        public IEnumerable<Vote> Votes { get; set; } = Array.Empty<Vote>();
+        public bool IsActive { get; set; } = true;
+        public string Email { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public byte[] PasswordHash { get; set; } = Array.Empty<byte>();
+        public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
+        public IEnumerable<Vote> Votes { get; set; } = default!;
     }
 }
