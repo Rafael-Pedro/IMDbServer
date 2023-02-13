@@ -11,7 +11,5 @@ public class CastMap : IEntityTypeConfiguration<Cast>
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Name).IsRequired();
         builder.Property(c => c.Description).IsRequired();
-        builder.HasMany(c => c.ActedMovies).WithOne(m =>);
-
     }
 }
