@@ -1,5 +1,7 @@
-﻿namespace IMDb.Server.Infra.Database.Repositories;
+﻿using IMDb.Server.Infra.Database.Abstraction.Respositories;
 
-public class GenresRepository
+namespace IMDb.Server.Infra.Database.Repositories;
+
+public class GenresRepository : IGenresRepository
 {
 }
