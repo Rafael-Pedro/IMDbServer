@@ -4,7 +4,7 @@ namespace IMDb.Server.Domain.Entities;
 
 public class Movies : Entity
 {
-    public int TotalVotes { get; set; }
+    public int TotalVotes { get; set; } = 0;
     public decimal Rating { get; set; } = 0;
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

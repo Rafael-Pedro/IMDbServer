@@ -8,4 +8,5 @@ public class Vote : Entity
     public Users User { get; set; } = default!;
     public int MovieId { get; set; }
     public Movies Movie { get; set; } = default!;
+    public int Rate { get; set; } = 0;
 }

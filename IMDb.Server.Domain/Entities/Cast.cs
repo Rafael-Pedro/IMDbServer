@@ -6,8 +6,8 @@ namespace IMDb.Server.Domain.Entities
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public IEnumerable<CastMovies> DirectedMovies { get; set; } = default!;
         public IEnumerable<CastMovies> ActedMovies { get; set; } = default!;
+        public IEnumerable<CastMovies> DirectedMovies { get; set; } = default!;
         public DateTime DateBirth { get; set; }
     }
 }
