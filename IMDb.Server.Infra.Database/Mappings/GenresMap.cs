@@ -10,6 +10,6 @@ public class GenresMap : IEntityTypeConfiguration<Genres>
     {
         builder.HasKey(g => g.Id);
         builder.Property(g => g.Name).IsRequired().HasMaxLength(30);
-        builder.HasMany(g => g.GenresMovies).WithOne(gm => gm.Genres).HasForeignKey(g => g.GenresId);
+        builder.HasMany(g => g.GenresMovies).WithOne(gm => gm.Genres).HasForeignKey(gm => gm.GenresId);
     }
 }
