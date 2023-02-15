@@ -9,8 +9,8 @@ public class Movies : Entity
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime ReleaseDate { get; set; }
-    public IEnumerable<CastMovies> ActorCast { get; set; } = default!;
-    public IEnumerable<CastMovies> DirectorCast { get; set; } = default!;
+    public IEnumerable<CastActMovies> ActorCast { get; set; } = default!;
+    public IEnumerable<CastDirectMovies> DirectorCast { get; set; } = default!;
     public IEnumerable<Vote> Votes { get; set; } = default!;
     public IEnumerable<GenresMovies> GenresMovies { get; set; } = default!;
 }
