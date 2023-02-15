@@ -8,9 +8,9 @@ namespace IMDb.Server.Infra.Database;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDatabase(this IServiceCollection services)
     {
-        var connectionString = Environment.GetEnvironmentVariable("");
+        var connectionString = Environment.GetEnvironmentVariable("IMDbServerConnection");
         services.AddDbContext<IMDbContext>(opts => opts.UseSqlServer(connectionString));
         services.AddRepositories();
 

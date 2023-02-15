@@ -15,7 +15,22 @@ public class UsersRepository : IUsersRepository
         throw new NotImplementedException();
     }
 
+    public Task<Users?> GetByEmail(string email, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Users?> GetByName(string name, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> IsUniqueUserName(string userName, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

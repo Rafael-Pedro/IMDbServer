@@ -11,7 +11,7 @@ public class IMDbContext : DbContext
     }
 
     public DbSet<Cast> Casts { get; set; }
-    public DbSet<CastMovies> CastMovies { get; set; }
+    public DbSet<CastActMovies> CastMovies { get; set; }
     public DbSet<Genres> Genres { get; set; }
     public DbSet<GenresMovies> GenresMovies { get; set; }
     public DbSet<Movies> Movies { get; set; }
@@ -21,7 +21,7 @@ public class IMDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CastMap());
-        modelBuilder.ApplyConfiguration(new CastMoviesMap());
+        modelBuilder.ApplyConfiguration(new CastMoviesActMap());
         modelBuilder.ApplyConfiguration(new GenresMap());
         modelBuilder.ApplyConfiguration(new GenresMoviesMap());
         modelBuilder.ApplyConfiguration(new MoviesMap());
