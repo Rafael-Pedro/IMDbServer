@@ -1,42 +1,41 @@
 ﻿using IMDb.Server.Domain.Entities;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
+using Microsoft.EntityFrameworkCore;
+using MulviParking.Server.Infra.Database.Abstractions;
 
 namespace IMDb.Server.Infra.Database.Repositories;
 
 public class UsersRepository : IUsersRepository
 {
-    public Task Create(Users users, CancellationToken cancellationToken)
+    private readonly IMDbContext context;
+
+    public UsersRepository(IMDbContext context)
     {
-        throw new NotImplementedException();
+        this.context = context;
     }
+
+    public async Task Create(Users users, CancellationToken cancellationToken)
+        => await context.Users.AddAsync(users, cancellationToken);
 
     public void Delete(Users users)
-    {
-        throw new NotImplementedException();
-    }
+       => context.Remove(users);
 
-    public Task<Users?> GetByEmail(string email, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<Users?> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions)
+        => throw new NotImplementedException();
 
-    public Task<Users?> GetByName(string name, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Users?> GetByEmail(string email, CancellationToken cancellationToken)
+        => await context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
-    public Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Users?> GetByName(string name, CancellationToken cancellationToken)
+        => await context.Users.FirstOrDefaultAsync(u => u.Username == name, cancellationToken);
 
-    public Task<bool> IsUniqueUserName(string userName, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
+        => !await context.Users.AnyAsync(u => u.Email == email, cancellationToken);
+
+    public async Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken)
+        => !await context.Users.AnyAsync(u => u.Username == username, cancellationToken);
 
     public void Update(Users users)
-    {
-        throw new NotImplementedException();
-    }
+        => context.Update(users);
+
 }
