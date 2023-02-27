@@ -1,5 +1,4 @@
 ﻿using IMDb.Server.Domain.Entities;
-using MulviParking.Server.Infra.Database.Abstractions;
 
 namespace IMDb.Server.Infra.Database.Abstraction.Respositories;
 
