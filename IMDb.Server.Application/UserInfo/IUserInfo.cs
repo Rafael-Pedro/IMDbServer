@@ -2,5 +2,5 @@
 
 public interface IUserInfo
 {
-    int? Id { get; }
+    int Id { get; }
 }
