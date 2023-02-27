@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace MulviParking.Server.Application.Services.Cryptography;
+namespace IMDb.Server.Application.Services.Cryptography;
 public class CryptographyService : ICryptographyService
 {
     public bool Compare(byte[] originalHash, byte[] originalSalt, string plainText)

@@ -1,4 +1,4 @@
-﻿namespace MulviParking.Server.Application.Services.Cryptography;
+﻿namespace IMDb.Server.Application.Services.Cryptography;
 public interface ICryptographyService
 {
     byte[] Hash(string plainText, byte[] salt);
