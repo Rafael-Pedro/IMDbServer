@@ -10,6 +10,7 @@ public class IMDbContext : DbContext
     {
     }
 
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<Cast> Casts { get; set; }
     public DbSet<CastActMovies> CastMovies { get; set; }
     public DbSet<Genres> Genres { get; set; }
@@ -20,6 +21,7 @@ public class IMDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new AdminMap());
         modelBuilder.ApplyConfiguration(new CastMap());
         modelBuilder.ApplyConfiguration(new CastMoviesActMap());
         modelBuilder.ApplyConfiguration(new GenresMap());

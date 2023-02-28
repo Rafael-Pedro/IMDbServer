@@ -17,9 +17,6 @@ public class UsersRepository : IUsersRepository
     public async Task Create(Users users, CancellationToken cancellationToken)
         => await context.Users.AddAsync(users, cancellationToken);
 
-    public void Delete(Users users)
-       => context.Remove(users);
-
     public Task<Users?> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions)
         => throw new NotImplementedException();
 
