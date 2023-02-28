@@ -9,21 +9,25 @@ namespace IMDb.Server.Application.Features.Account.Admin.Registration;
 
 public class RegisterAccountCommadHandler : IRequestHandler<RegisterAccountCommand, Result<RegisterAccountCommandResponse>>
 {
-    private readonly IUsersRepository usersRepository;
+    private readonly IAdminRepository adminRepository;
     private readonly IUnitOfWork unitOfWork;
     private readonly ICryptographyService cryptographyService;
 
-    public RegisterAccountCommadHandler(IUsersRepository usersRepository, IUnitOfWork unitOfWork, ICryptographyService cryptographyService)
+    public RegisterAccountCommadHandler(IUsersRepository usersRepository, IUnitOfWork unitOfWork, ICryptographyService cryptographyService, IAdminRepository adminRepository)
     {
-        this.usersRepository = usersRepository;
         this.unitOfWork = unitOfWork;
         this.cryptographyService = cryptographyService;
+        this.adminRepository = adminRepository;
     }
 
     public async Task<Result<RegisterAccountCommandResponse>> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
     {
-        if (await usersRepository.IsUniqueEmail(request.Login.ToLower(), cancellationToken) is false)
-            return Result.Fail(new ApplicationError("Email already used!"));
-        throw new NotImplementedException();
+        if (await adminRepository.IsUniqueUsername(request.Username.ToLower(), cancellationToken))
+            return Result.Fail(new ApplicationError("Username already used."));
+
+        if (await adminRepository.IsUniqueEmail(request.Email.ToLower(), cancellationToken))
+            return Result.Fail(new ApplicationError("Email already used."));
+
+
     }
 }
