@@ -1,11 +1,10 @@
-﻿using IMDb.Server.Domain.Entities;
+﻿using FluentResults;
+using IMDb.Server.Domain.Entities.Abstract;
 
 namespace IMDb.Server.Application.Services.Token;
 
 public interface ITokenService
 {
-    string? GenerateToken(Admin admin);
-    string? GenerateToken(Users user);
+    string? GenerateToken(Account account);
     string GenerateRefreshToken();
-
 }
