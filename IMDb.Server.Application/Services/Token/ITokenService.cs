@@ -1,5 +1,4 @@
-﻿using FluentResults;
-using IMDb.Server.Domain.Entities.Abstract;
+﻿using IMDb.Server.Domain.Entities.Abstract;
 
 namespace IMDb.Server.Application.Services.Token;
 
