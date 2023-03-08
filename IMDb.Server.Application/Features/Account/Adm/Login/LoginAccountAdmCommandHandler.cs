@@ -2,28 +2,25 @@
 using IMDb.Server.Application.Extension;
 using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Application.Services.Token;
-using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
 using MediatR;
 
 namespace IMDb.Server.Application.Features.Account.Adm.Login;
 
-public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, Result<LoginAccountCommandResponse>>
+public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmCommand, Result<LoginAccountAdmCommandResponse>>
 {
     private readonly IAdminRepository adminRepository;
     private readonly ITokenService tokenService;
     private readonly ICryptographyService cryptographyService;
-    private readonly IUnitOfWork unitOfWork;
 
-    public LoginAccountCommandHandler(IAdminRepository adminRepository, ITokenService tokenService, ICryptographyService cryptographyService, IUnitOfWork unitOfWork)
+    public LoginAccountAdmCommandHandler(IAdminRepository adminRepository, ITokenService tokenService, ICryptographyService cryptographyService)
     {
         this.adminRepository = adminRepository;
         this.tokenService = tokenService;
         this.cryptographyService = cryptographyService;
-        this.unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<LoginAccountCommandResponse>> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
+    public async Task<Result<LoginAccountAdmCommandResponse>> Handle(LoginAccountAdmCommand request, CancellationToken cancellationToken)
     {
         var admin = await adminRepository.GetByUserName(request.Username, cancellationToken);
 
@@ -36,8 +33,6 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, R
         var token = tokenService.GenerateToken(admin);
         var refreshToken = tokenService.GenerateRefreshToken();
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Ok(new LoginAccountCommandResponse(true, token!, refreshToken));
+        return Result.Ok(new LoginAccountAdmCommandResponse(true, token!, refreshToken));
     }
 }

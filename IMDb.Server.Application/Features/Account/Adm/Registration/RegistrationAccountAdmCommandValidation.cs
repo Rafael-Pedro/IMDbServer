@@ -2,9 +2,9 @@
 
 namespace IMDb.Server.Application.Features.Account.Adm.Registration;
 
-public class RegisterAccountCommandValidation : AbstractValidator<RegisterAccountCommand>
+public class RegistrationAccountAdmCommandValidation : AbstractValidator<RegistrationAccountAdmCommand>
 {
-    public RegisterAccountCommandValidation()
+    public RegistrationAccountAdmCommandValidation()
     {
         RuleFor(rac => rac.Username).NotEmpty().MinimumLength(6);
         RuleFor(rac => rac.Email).NotEmpty().MaximumLength(256);
