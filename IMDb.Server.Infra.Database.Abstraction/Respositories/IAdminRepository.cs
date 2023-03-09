@@ -10,4 +10,5 @@ public interface IAdminRepository
     Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken);
     Task<Admin?> GetByUserName(string username, CancellationToken cancellationToken);
     Task<Admin?> GetByEmail(string email, CancellationToken cancellationToken);
+    Task<Admin?> GetById(int id, CancellationToken cancellationToken);
 }

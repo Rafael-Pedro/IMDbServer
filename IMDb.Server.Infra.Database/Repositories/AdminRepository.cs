@@ -29,4 +29,7 @@ public class AdminRepository : IAdminRepository
 
     public async Task<Admin?> GetByEmail(string email, CancellationToken cancellationToken)
     => await context.Admins.FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
+
+    public async Task<Admin?> GetById(int id, CancellationToken cancellationToken)
+        => await context.Admins.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 }

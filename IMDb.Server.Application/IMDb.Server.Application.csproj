@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Account\Client\" />
+    <Folder Include="Features\Account\User\Disable\" />
+    <Folder Include="Features\Account\User\Registration\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,12 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using FluentResults;
+using IMDb.Server.Application.Extension;
+using IMDb.Server.Infra.Database.Abstraction;
+using IMDb.Server.Infra.Database.Abstraction.Respositories;
 
-namespace IMDb.Server.Application.Features.Account.Adm.Disable
+namespace IMDb.Server.Application.Features.Account.Adm.Disable;
+
+public class DisableAccountAdmCommandHandler : IRequestHandler<DisableAccountAdmCommand, Result>
 {
-    internal class DisableAccountAdmCommandHandler
+    private readonly IAdminRepository adminRepository;
+    private readonly IUnitOfWork unitOfWork;
+
+    public DisableAccountAdmCommandHandler(IAdminRepository adminRepository, IUnitOfWork unitOfWork)
     {
+        this.adminRepository = adminRepository;
+        this.unitOfWork = unitOfWork;
+    }
+
+    public async Task<Result> Handle(DisableAccountAdmCommand request, CancellationToken cancellationToken)
+    {
+        var admin = await adminRepository.GetById(request.UserId, cancellationToken);
+
+        if (admin is null)
+            return Result.Fail(new ApplicationError("Invalid admin"));
+
+        if (admin.IsActive is false)
+            return Result.Fail(new ApplicationError("Admin already disabled"));
+
+        admin.IsActive = false;
+
+        adminRepository.Update(admin);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Ok();
     }
 }
