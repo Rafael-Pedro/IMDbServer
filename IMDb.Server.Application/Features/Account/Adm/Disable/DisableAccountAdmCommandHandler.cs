@@ -3,6 +3,7 @@ using FluentResults;
 using IMDb.Server.Application.Extension;
 using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
+using IMDb.Server.Application.UserInfo;
 
 namespace IMDb.Server.Application.Features.Account.Adm.Disable;
 
@@ -10,16 +11,18 @@ public class DisableAccountAdmCommandHandler : IRequestHandler<DisableAccountAdm
 {
     private readonly IAdminRepository adminRepository;
     private readonly IUnitOfWork unitOfWork;
+    private readonly IUserInfo userInfo;
 
-    public DisableAccountAdmCommandHandler(IAdminRepository adminRepository, IUnitOfWork unitOfWork)
+    public DisableAccountAdmCommandHandler(IAdminRepository adminRepository, IUnitOfWork unitOfWork, IUserInfo userInfo)
     {
         this.adminRepository = adminRepository;
         this.unitOfWork = unitOfWork;
+        this.userInfo = userInfo;
     }
 
     public async Task<Result> Handle(DisableAccountAdmCommand request, CancellationToken cancellationToken)
     {
-        var admin = await adminRepository.GetById(request.UserId, cancellationToken);
+        var admin = await adminRepository.GetById(userInfo.Id, cancellationToken);
 
         if (admin is null)
             return Result.Fail(new ApplicationError("Invalid admin"));

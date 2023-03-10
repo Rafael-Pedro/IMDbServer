@@ -18,6 +18,8 @@ public class AdminRepository : IAdminRepository
 
     public void Update(Admin admin)
     => context.Update(admin);
+    public async Task<Admin?> GetById(int id, CancellationToken cancellationToken)
+        => await context.Admins.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
     => await context.Admins.AnyAsync(a => a.Email == email, cancellationToken) is false;
 
@@ -30,6 +32,4 @@ public class AdminRepository : IAdminRepository
     public async Task<Admin?> GetByEmail(string email, CancellationToken cancellationToken)
     => await context.Admins.FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
 
-    public async Task<Admin?> GetById(int id, CancellationToken cancellationToken)
-        => await context.Admins.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 }
