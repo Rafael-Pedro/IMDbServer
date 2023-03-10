@@ -20,6 +20,9 @@ public class UsersRepository : IUsersRepository
     public Task<Users?> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions)
         => throw new NotImplementedException();
 
+    public async Task<Users?> GetById(int id, CancellationToken cancellationToken)
+        => await context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
     public async Task<Users?> GetByEmail(string email, CancellationToken cancellationToken)
         => await context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 

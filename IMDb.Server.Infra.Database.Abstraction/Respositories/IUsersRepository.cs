@@ -8,6 +8,7 @@ public interface IUsersRepository
     void Update(Users users);
     Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken);
     Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken);
+    Task<Users?> GetById(int id , CancellationToken cancellationToken);
     Task<Users?> GetByName(string name, CancellationToken cancellationToken);
     Task<Users?> GetByEmail(string email, CancellationToken cancellationToken);
     Task<Users?> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions);
