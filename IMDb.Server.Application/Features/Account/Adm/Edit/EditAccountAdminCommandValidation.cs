@@ -6,9 +6,9 @@ namespace IMDb.Server.Application.Features.Account.Adm.Edit
     {
         public EditAccountAdminCommandValidation()
         {
-            RuleFor(eaacv => eaacv.Username).MinimumLength(6);
-            RuleFor(eaacv => eaacv.Password).MinimumLength(6);
-            RuleFor(eaacv => eaacv.Email).EmailAddress().MaximumLength(6);
+            When(rf => rf is not null, () => RuleFor(rf => rf.Username).MinimumLength(6).MaximumLength(35));
+            When(rf => rf is not null, () => RuleFor(rf => rf.Password).MinimumLength(6));
+            When(rf => rf is not null, () => RuleFor(rf => rf.Email).EmailAddress().MaximumLength(256));
         }
     }
 }

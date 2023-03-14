@@ -6,7 +6,7 @@ public class RegistrationAccountAdmCommandValidation : AbstractValidator<Registr
 {
     public RegistrationAccountAdmCommandValidation()
     {
-        RuleFor(rac => rac.Username).NotEmpty().MinimumLength(6);
+        RuleFor(rac => rac.Username).NotEmpty().MinimumLength(6).MaximumLength(35);
         RuleFor(rac => rac.Email).NotEmpty().EmailAddress().MaximumLength(256);
         RuleFor(rac => rac.Password).NotEmpty().MinimumLength(6);
     }
