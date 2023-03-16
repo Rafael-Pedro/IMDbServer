@@ -6,8 +6,8 @@ public class EditAccountUserCommandValidation : AbstractValidator<EditAccountUse
 {
     public EditAccountUserCommandValidation()
     {
-        When(rf => rf is not null, () => RuleFor(rf => rf.Username).MinimumLength(6).MaximumLength(35));
-        When(rf => rf is not null, () => RuleFor(rf => rf.Password).MinimumLength(6));
-        When(rf => rf is not null, () => RuleFor(rf => rf.Email).EmailAddress().MaximumLength(256));
+        When(eauc => eauc is not null, () => RuleFor(eauc => eauc.Username).MinimumLength(6).MaximumLength(35));
+        When(eauc => eauc is not null, () => RuleFor(eauc => eauc.Password).MinimumLength(6));
+        When(eauc => eauc is not null, () => RuleFor(eauc => eauc.Email).EmailAddress().MaximumLength(256));
     }
 }
