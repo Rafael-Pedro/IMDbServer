@@ -8,8 +8,6 @@ public interface IMoviesRepository
     void Update(Movies movies);
     void Delete(Movies movies);
     Task<Movies> GetById(int id, CancellationToken cancellationToken);
+    Task<bool> IsUniqueName(string name, CancellationToken cancellationToken);
     IEnumerable<Movies> GetAll(PaginatedQueryOptions paginatedQueryOptions);
-    IEnumerable<Movies> GetByGenre(IEnumerable<Genres> genres, PaginatedQueryOptions paginatedQueryOptions, CancellationToken cancellationToken);
-    IEnumerable<Movies> GetByActors(IEnumerable<Cast> actors, PaginatedQueryOptions paginatedQueryOptions, CancellationToken cancellationToken);
-    IEnumerable<Movies> GetByDirector(IEnumerable<Cast> directors, PaginatedQueryOptions paginatedQueryOptions, CancellationToken cancellationToken);
 }
