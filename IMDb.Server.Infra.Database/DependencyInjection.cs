@@ -21,10 +21,10 @@ public static class DependencyInjection
     {
         services.AddScoped<IVoteRepository, VoteRepository>();
         services.AddScoped<ICastRepository, CastRepository>();
+        services.AddScoped<IAdminRepository, AdminRepository>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IMoviesRepository, MoviesRepository>();
         services.AddScoped<IGenresRepository, GenresRepository>();
-        services.AddScoped<IGenresMoviesRepository, GenresMoviesRepository>();
 
         return services;
     }

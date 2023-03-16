@@ -35,7 +35,7 @@ public class CastRepository : ICastRepository
         throw new NotImplementedException();
     }
 
-    public Task<bool> IsAlreadyRegistered(string name, CancellationToken cancellationToken)
+    public Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
