@@ -31,7 +31,7 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
         var lowerEmail = request.Email.ToLower();
 
         if (user is null)
-            return Result.Fail(new ApplicationError ("User doesn't exists."));
+            return Result.Fail(new ApplicationError("User doesn't exists."));
 
         if (await usersRepository.IsUniqueUsername(lowerUsername, cancellationToken))
             return Result.Fail(new ApplicationError("Username already used."));
@@ -39,13 +39,16 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
         if (await usersRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email aleaready used."));
 
-        var salt = cryptographyService.CreateSalt();
-        var passwordCryptograph = cryptographyService.Hash(request.Password, salt);
+        if (request.Password is not null)
+        {
+            var salt = cryptographyService.CreateSalt();
+            var passwordCrypt = cryptographyService.Hash(request.Password, salt);
+            user.PasswordHash = passwordCrypt;
+            user.PasswordHashSalt = salt;
+        }
 
         user.Username = lowerUsername;
         user.Email = lowerEmail;
-        user.PasswordHashSalt = salt;
-        user.PasswordHash = passwordCryptograph;
 
         usersRepository.Update(user);
 
