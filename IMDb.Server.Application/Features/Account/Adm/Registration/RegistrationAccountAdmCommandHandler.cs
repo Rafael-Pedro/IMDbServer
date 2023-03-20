@@ -8,13 +8,13 @@ using IMDb.Server.Domain.Entities;
 
 namespace IMDb.Server.Application.Features.Account.Adm.Registration;
 
-public class RegistrationAccountAdmCommadHandler : IRequestHandler<RegistrationAccountAdmCommand, Result>
+public class RegistrationAccountAdmCommandHandler : IRequestHandler<RegistrationAccountAdmCommand, Result>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IAdminRepository adminRepository;
     private readonly ICryptographyService cryptographyService;
 
-    public RegistrationAccountAdmCommadHandler(IUsersRepository usersRepository, IUnitOfWork unitOfWork, ICryptographyService cryptographyService, IAdminRepository adminRepository)
+    public RegistrationAccountAdmCommandHandler(IUnitOfWork unitOfWork, ICryptographyService cryptographyService, IAdminRepository adminRepository)
     {
         this.unitOfWork = unitOfWork;
         this.cryptographyService = cryptographyService;

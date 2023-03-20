@@ -5,6 +5,7 @@ using IMDb.Server.Application.Extension;
 using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
+using IMDb.Server.Domain.Entities;
 
 namespace IMDb.Server.Application.Features.Account.Adm.Edit;
 public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCommand, Result>
@@ -38,14 +39,17 @@ public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCo
         if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email aleaready used."));
 
-        var salt = cryptographyService.CreateSalt();
-        var passwordCryptograph = cryptographyService.Hash(request.Password, salt);
+        if (request.Password is not null)
+        {
+            var salt = cryptographyService.CreateSalt();
+            var passwordCrypt = cryptographyService.Hash(request.Password, salt);
+            adm.PasswordHashSalt = salt;
+            adm.PasswordHash = passwordCrypt;
+        }
 
         adm.Username = lowerUsername;
         adm.Email = lowerEmail;
-        adm.PasswordHashSalt = salt;
-        adm.PasswordHash = passwordCryptograph;
-
+        
         adminRepository.Update(adm);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
