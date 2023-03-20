@@ -22,12 +22,13 @@ public class DeleteMoviesCommandHandler : IRequestHandler<DeleteMoviesCommand, R
 
     public async Task<Result> Handle(DeleteMoviesCommand request, CancellationToken cancellationToken)
     {
-        var movie = moviesRepository.GetById(userInfo.Id, cancellationToken);
+        var movie = await moviesRepository.GetById(userInfo.Id, cancellationToken);
 
         if (movie is null)
             return Result.Fail(new ApplicationError("Movie doesn't exists."));
 
-
+        moviesRepository.Delete(movie);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Ok();
     }
