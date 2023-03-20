@@ -3,4 +3,4 @@ using MediatR;
 
 namespace IMDb.Server.Application.Features.MoviesManagement.GetAllMovies;
 
-public record GetAllMoviesCommand() : IRequest<Result>;
+public record GetAllMoviesQuery() : IRequest<Result>;

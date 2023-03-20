@@ -5,17 +5,17 @@ using IMDb.Server.Infra.Database.Abstraction.Respositories;
 
 namespace IMDb.Server.Application.Features.MoviesManagement.GetMoviesById;
 
-public class GetMoviesByIdCommandHandler : IRequestHandler<GetMoviesByIdCommand, Result>
+public class GetMoviesByIdQueryHandler : IRequestHandler<GetMoviesByIdQuery, Result>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IMoviesRepository moviesRepository;
 
-    public GetMoviesByIdCommandHandler(IUnitOfWork unitOfWork)
+    public GetMoviesByIdQueryHandler(IUnitOfWork unitOfWork)
     {
         this.unitOfWork = unitOfWork;
     }
 
-    public Task<Result> Handle(GetMoviesByIdCommand request, CancellationToken cancellationToken)
+    public Task<Result> Handle(GetMoviesByIdQuery request, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
