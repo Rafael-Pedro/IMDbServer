@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentResults;
+using MediatR;
 
-namespace IMDb.Server.Application.Features.MoviesManagement.GetMoviesById
-{
-    internal class GetMoviesByIdCommand
-    {
-    }
-}
+namespace IMDb.Server.Application.Features.MoviesManagement.GetMoviesById;
+
+public record GetMoviesByIdCommand() : IRequest<Result>;

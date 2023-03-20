@@ -11,5 +11,5 @@ public interface IUsersRepository
     Task<Users?> GetById(int id , CancellationToken cancellationToken);
     Task<Users?> GetByName(string name, CancellationToken cancellationToken);
     Task<Users?> GetByEmail(string email, CancellationToken cancellationToken);
-    Task<Users?> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions);
+    IEnumerable<Users> GetAllActiveUsers(PaginatedQueryOptions paginatedQueryOptions);
 }

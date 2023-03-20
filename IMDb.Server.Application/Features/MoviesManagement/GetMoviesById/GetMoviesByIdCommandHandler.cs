@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using FluentResults;
+using IMDb.Server.Infra.Database.Abstraction;
+using IMDb.Server.Infra.Database.Abstraction.Respositories;
 
-namespace IMDb.Server.Application.Features.MoviesManagement.GetMoviesById
+namespace IMDb.Server.Application.Features.MoviesManagement.GetMoviesById;
+
+public class GetMoviesByIdCommandHandler : IRequestHandler<GetMoviesByIdCommand, Result>
 {
-    internal class GetMoviesByIdCommandHandler
+    private readonly IUnitOfWork unitOfWork;
+    private readonly IMoviesRepository moviesRepository;
+
+    public GetMoviesByIdCommandHandler(IUnitOfWork unitOfWork)
     {
+        this.unitOfWork = unitOfWork;
+    }
+
+    public Task<Result> Handle(GetMoviesByIdCommand request, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }
