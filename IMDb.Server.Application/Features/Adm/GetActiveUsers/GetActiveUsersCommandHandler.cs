@@ -1,7 +1,7 @@
 ﻿using FluentResults;
 using MediatR;
 
-namespace IMDb.Server.Application.Features.Adm.Account.GetActiveUsers;
+namespace IMDb.Server.Application.Features.Adm.GetActiveUsers;
 
 public class GetActiveUsersCommandHandler : IRequestHandler<GetActiveUsersCommand, Result>
 {
