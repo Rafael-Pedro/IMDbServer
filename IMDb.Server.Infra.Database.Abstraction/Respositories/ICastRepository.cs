@@ -9,7 +9,7 @@ public interface ICastRepository
     void Update(Cast cast);
     Task<Cast?> GetById(int id);
     Task<Cast?> GetByName(string name, CancellationToken cancellationToken);
-    Task<Cast?> GetByBirthDate(string BirhDate, CancellationToken cancellationToken);
     Task<CastActMovies?> GetByMovie(int id, CancellationToken cancellationToken);
     Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken);
+    Task<bool> IsAlreadyRegistred(string name, CancellationToken cancellationToken);
 }

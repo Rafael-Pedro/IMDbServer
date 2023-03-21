@@ -18,10 +18,10 @@ public class MoviesRepository : IMoviesRepository
     => context.Remove(movies);
     public void Update(Movies movies)
     => context.Update(movies);
-    public async Task<Movies?> GetById(int id, CancellationToken cancellationToken)
-    => await context.Movies.FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+    public Task<Movies?> GetById(int id, CancellationToken cancellationToken)
+    => context.Movies.FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
     public async Task<bool> IsUniqueName(string name, CancellationToken cancellationToken)
-    => await context.Movies.AnyAsync(m => m.Name == name, cancellationToken) is false;
+    => await context.Movies.AnyAsync(m => m.Name.ToLower() == name.ToLower(), cancellationToken) is false;
     public IEnumerable<Movies> GetAll(PaginatedQueryOptions paginatedQueryOptions)
     => throw new NotImplementedException();
 

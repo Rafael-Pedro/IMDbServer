@@ -18,10 +18,11 @@ public class GetActiveUsersQueryHandler : IRequestHandler<GetActiveUsersQuery, R
     {
         var page = new PaginatedQueryOptions(request.Page, request.PageSize, request.IsDescending);
 
-        var usersActive = usersRepository.GetAllActiveUsers(page);
+        var activeUsers = usersRepository.GetAllActiveUsers(page);
 
-        var result = usersActive.Select(ua => new GetActiveUsersQueryResponse(ua.Id, ua.Username, ua.Email));
+        if (activeUsers is null)
+            return Task.FromResult(Result.Ok(Enumerable.Empty<GetActiveUsersQueryResponse>()));
 
-        return Task.FromResult(Result.Ok(result));
+        return Task.FromResult(Result.Ok(activeUsers.Select(au => new GetActiveUsersQueryResponse(au.Id, au.Username, au.Email))));
     }
 }

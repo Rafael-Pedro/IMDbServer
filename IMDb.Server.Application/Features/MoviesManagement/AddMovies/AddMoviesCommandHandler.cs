@@ -24,7 +24,7 @@ public class AddMoviesCommandHandler : IRequestHandler<AddMoviesCommand, Result<
     public async Task<Result<AddMoviesCommandResponse>> Handle(AddMoviesCommand request, CancellationToken cancellationToken)
     {
 
-        if(await moviesRepository.IsUniqueName(request.Name.ToLower(), cancellationToken))
+        if(await moviesRepository.IsUniqueName(request.Name, cancellationToken))
             return Result.Fail(new ApplicationError("Movie already registred."));
 
         if (await genresRepository.ExistingGenders(request.Genres, cancellationToken))

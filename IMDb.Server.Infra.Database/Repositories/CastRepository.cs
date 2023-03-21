@@ -5,20 +5,16 @@ namespace IMDb.Server.Infra.Database.Repositories;
 
 public class CastRepository : ICastRepository
 {
-    public Task Create(Cast cast, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    private readonly IMDbContext context;
+
+    public CastRepository(IMDbContext context)
+    => this.context = context;
+
+    public async Task Create(Cast cast, CancellationToken cancellationToken)
+    => await context.Casts.AddAsync(cast, cancellationToken);
 
     public void Delete(Cast cast)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Cast?> GetByBirthDate(string BirhDate, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    => context.Casts.Remove(cast);
 
     public Task<Cast?> GetById(int id)
     {
@@ -36,12 +32,11 @@ public class CastRepository : ICastRepository
     }
 
     public Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
+    => throw new NotImplementedException();
+
+    public Task<bool> IsAlreadyRegistred(string name, CancellationToken cancellationToken)
+    => throw new NotImplementedException();
 
     public void Update(Cast cast)
-    {
-        throw new NotImplementedException();
-    }
+    => throw new NotImplementedException();
 }

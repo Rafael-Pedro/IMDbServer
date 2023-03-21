@@ -1,6 +1,6 @@
-﻿using FluentResults;
+﻿using MediatR;
+using FluentResults;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
-using MediatR;
 
 namespace IMDb.Server.Application.Features.MoviesManagement.GetAllMovies;
 

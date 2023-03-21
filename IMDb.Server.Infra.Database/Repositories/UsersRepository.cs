@@ -11,9 +11,8 @@ public class UsersRepository : IUsersRepository
     private readonly IMDbContext context;
 
     public UsersRepository(IMDbContext context)
-    {
-        this.context = context;
-    }
+    => this.context = context;
+
 
     public async Task Create(Users users, CancellationToken cancellationToken)
         => await context.Users.AddAsync(users, cancellationToken);
@@ -31,12 +30,11 @@ public class UsersRepository : IUsersRepository
         => context.Users.FirstOrDefaultAsync(u => u.Username == name, cancellationToken);
 
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
-        => !await context.Users.AnyAsync(u => u.Email == email, cancellationToken);
+        => await context.Users.AnyAsync(u => u.Email == email, cancellationToken) is false;
 
     public async Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken)
-        => !await context.Users.AnyAsync(u => u.Username == username, cancellationToken);
+        => await context.Users.AnyAsync(u => u.Username == username, cancellationToken) is false;
 
     public void Update(Users users)
         => context.Update(users);
-
 }
