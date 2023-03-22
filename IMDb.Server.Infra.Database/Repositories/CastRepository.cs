@@ -16,7 +16,7 @@ public class CastRepository : ICastRepository
     public void Delete(Cast cast)
     => context.Casts.Remove(cast);
 
-    public Task<Cast?> GetById(int id)
+    public Task<Cast?> GetById(int id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
