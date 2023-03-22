@@ -11,18 +11,16 @@ public class DeleteMoviesCommandHandler : IRequestHandler<DeleteMoviesCommand, R
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IMoviesRepository moviesRepository;
-    private readonly IUserInfo userInfo;
 
-    public DeleteMoviesCommandHandler(IUnitOfWork unitOfWork, IMoviesRepository moviesRepository, IUserInfo userInfo)
+    public DeleteMoviesCommandHandler(IUnitOfWork unitOfWork, IMoviesRepository moviesRepository)
     {
         this.unitOfWork = unitOfWork;
         this.moviesRepository = moviesRepository;
-        this.userInfo = userInfo;
     }
 
     public async Task<Result> Handle(DeleteMoviesCommand request, CancellationToken cancellationToken)
     {
-        var movie = await moviesRepository.GetById(userInfo.Id, cancellationToken);
+        var movie = await moviesRepository.GetById(request.Id, cancellationToken);
 
         if (movie is null)
             return Result.Fail(new ApplicationError("Movie doesn't exists."));

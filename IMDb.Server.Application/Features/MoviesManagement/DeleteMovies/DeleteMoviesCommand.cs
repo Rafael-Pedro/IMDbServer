@@ -3,4 +3,4 @@ using FluentResults;
 
 namespace IMDb.Server.Application.Features.MoviesManagement.DeleteMovies;
 
-public record DeleteMoviesCommand() : IRequest<Result>;
+public record DeleteMoviesCommand(int Id) : IRequest<Result>;
