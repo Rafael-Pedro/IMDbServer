@@ -1,3 +1,3 @@
 ﻿namespace IMDb.Server.Application.Features.Casts.AddCast;
 
-public record CastCommandHandlerResponse(int Id);
+public record CastCommandResponse(int Id);

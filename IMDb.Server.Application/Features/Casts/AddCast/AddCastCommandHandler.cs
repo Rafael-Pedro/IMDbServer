@@ -7,7 +7,7 @@ using IMDb.Server.Domain.Entities;
 
 namespace IMDb.Server.Application.Features.Casts.AddCast;
 
-public class CastCommandHandler : IRequestHandler<CastCommand, Result<CastCommandHandlerResponse>>
+public class CastCommandHandler : IRequestHandler<AddCastCommand, Result<CastCommandResponse>>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly ICastRepository castRepository;
@@ -18,7 +18,7 @@ public class CastCommandHandler : IRequestHandler<CastCommand, Result<CastComman
         this.castRepository = castRepository;
     }
 
-    public async Task<Result<CastCommandHandlerResponse>> Handle(CastCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CastCommandResponse>> Handle(AddCastCommand request, CancellationToken cancellationToken)
     {
 
         if (await castRepository.IsAlreadyRegistred(request.Name, cancellationToken) is true)
@@ -35,6 +35,6 @@ public class CastCommandHandler : IRequestHandler<CastCommand, Result<CastComman
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result.Ok(new CastCommandHandlerResponse(cast.Id));
+        return Result.Ok(new CastCommandResponse(cast.Id));
     }
 }

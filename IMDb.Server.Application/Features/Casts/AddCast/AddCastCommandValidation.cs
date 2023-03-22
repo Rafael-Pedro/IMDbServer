@@ -2,9 +2,9 @@
 
 namespace IMDb.Server.Application.Features.Casts.AddCast;
 
-public class AddCastCommandHandlerValidation : AbstractValidator<AddCastCommand>
+public class AddCastCommandValidation : AbstractValidator<AddCastCommand>
 {
-    public AddCastCommandHandlerValidation()
+    public AddCastCommandValidation()
     {
         RuleFor(rf => rf.Name).MaximumLength(200);
         RuleFor(rf => rf.Description).MaximumLength(400);

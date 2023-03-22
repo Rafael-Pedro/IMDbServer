@@ -3,8 +3,8 @@ using FluentResults;
 
 namespace IMDb.Server.Application.Features.Casts.AddCast;
 
-public record CastCommand(
+public record AddCastCommand(
     string Name,
     string Description,
     DateTime BirthDate
-) : IRequest<Result<CastCommandHandlerResponse>>;
+) : IRequest<Result<CastCommandResponse>>;
