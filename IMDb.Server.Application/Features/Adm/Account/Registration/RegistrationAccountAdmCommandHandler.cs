@@ -26,10 +26,10 @@ public class RegistrationAccountAdmCommandHandler : IRequestHandler<Registration
         var lowerUsername = request.Username.ToLower();
         var lowerEmail = request.Email.ToLower();
 
-        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken))
+        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
-        if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken))
+        if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email already used."));
 
         var salt = cryptographyService.CreateSalt();
