@@ -24,7 +24,7 @@ public class AdminRepository : IAdminRepository
     public async Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken)
     => await context.Admins.AnyAsync(a => a.Username == username, cancellationToken) is false;
 
-    public Task<Admin?> GetByUserName(string username, CancellationToken cancellationToken)
+    public Task<Admin?> GetByUsername(string username, CancellationToken cancellationToken)
     => context.Admins.FirstOrDefaultAsync(a => a.Username == username, cancellationToken);
 
     public Task<Admin?> GetByEmail(string email, CancellationToken cancellationToken)

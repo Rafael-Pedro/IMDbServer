@@ -14,8 +14,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Server.Presentation", "IMDb.Server.Presentation\IMDb.Server.Presentation.csproj", "{266D42CB-E8E8-4012-89ED-2ECFC0FDA303}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C09FD064-65E1-4FFB-ABBF-67627DCFA57C}"
+	ProjectSection(SolutionItems) = preProject
+		IMDb.Server.Application.Tests\Features\Admin\Account\DisableAccountAdmCommandHandlerTest.cs = IMDb.Server.Application.Tests\Features\Admin\Account\DisableAccountAdmCommandHandlerTest.cs
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMDb.Server.Application.Tests", "IMDb.Server.Application.Tests\IMDb.Server.Application.Tests.csproj", "{8958618C-AB14-401A-91C9-B7A9BCB33410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMDb.Server.Application.Tests", "IMDb.Server.Application.Tests\IMDb.Server.Application.Tests.csproj", "{8958618C-AB14-401A-91C9-B7A9BCB33410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
