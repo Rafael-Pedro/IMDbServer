@@ -22,10 +22,13 @@ public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmComm
 
     public async Task<Result<LoginAccountAdmCommandResponse>> Handle(LoginAccountAdmCommand request, CancellationToken cancellationToken)
     {
-        var admin = await adminRepository.GetByUserName(request.Username, cancellationToken);
+        var admin = await adminRepository.GetByUsername(request.Username.ToLower(), cancellationToken);
 
         if (admin is null)
             return Result.Fail(new ApplicationError("Invalid credentials"));
+
+        if (admin.IsActive is false)
+            return Result.Fail(new ApplicationError("Admin inactive"));
 
         if (cryptographyService.Compare(admin.PasswordHash, admin.PasswordHashSalt, request.Password) is false)
             return Result.Fail(new ApplicationError("Invalid credentials"));
@@ -33,6 +36,6 @@ public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmComm
         var token = tokenService.GenerateToken(admin);
         var refreshToken = tokenService.GenerateRefreshToken();
 
-        return Result.Ok(new LoginAccountAdmCommandResponse(true, token!, refreshToken));
+        return Result.Ok(new LoginAccountAdmCommandResponse(token!, refreshToken));
     }
 }

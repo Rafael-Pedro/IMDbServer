@@ -50,8 +50,6 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
         user.Username = lowerUsername;
         user.Email = lowerEmail;
 
-        usersRepository.Update(user);
-
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Ok();

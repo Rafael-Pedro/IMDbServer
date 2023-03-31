@@ -4,7 +4,6 @@ using IMDb.Server.Application.Services.Token;
 using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
 using MediatR;
-using IMDb.Server.Application.UserInfo;
 
 namespace IMDb.Server.Application.Features.User.Login;
 public class LoginAccountUserCommandHandler : IRequestHandler<LoginAccountUserCommand, Result<LoginAccountUserResponse>>
@@ -22,10 +21,13 @@ public class LoginAccountUserCommandHandler : IRequestHandler<LoginAccountUserCo
 
     public async Task<Result<LoginAccountUserResponse>> Handle(LoginAccountUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await usersRepository.GetByName(request.Username, cancellationToken);
+        var user = await usersRepository.GetByName(request.Username.ToLower(), cancellationToken);
 
         if (user is null)
             return Result.Fail(new ApplicationError("User doesn't exists"));
+
+        if (user.IsActive is false)
+            return Result.Fail(new ApplicationError("User is inactive"));
 
         if (cryptographyService.Compare(user.PasswordHash, user.PasswordHashSalt, request.Password) is false)
             return Result.Fail(new ApplicationError("Invalid credentials"));

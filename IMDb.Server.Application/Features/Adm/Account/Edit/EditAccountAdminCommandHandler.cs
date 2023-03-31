@@ -5,22 +5,21 @@ using IMDb.Server.Application.Extension;
 using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
-using IMDb.Server.Domain.Entities;
 
 namespace IMDb.Server.Application.Features.Adm.Account.Edit;
 public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCommand, Result>
 {
+    private readonly IUserInfo userInfo;
     private readonly IUnitOfWork unitOfWork;
     private readonly IAdminRepository adminRepository;
     private readonly ICryptographyService cryptographyService;
-    private readonly IUserInfo userInfo;
 
-    public EditAccountAdminCommandHandler(IUnitOfWork unitOfWork, IAdminRepository adminRepository, ICryptographyService cryptographyService, IUserInfo userInfo)
+    public EditAccountAdminCommandHandler(IUserInfo userInfo, IUnitOfWork unitOfWork, IAdminRepository adminRepository, ICryptographyService cryptographyService)
     {
+        this.userInfo = userInfo;
         this.unitOfWork = unitOfWork;
         this.adminRepository = adminRepository;
         this.cryptographyService = cryptographyService;
-        this.userInfo = userInfo;
     }
 
     public async Task<Result> Handle(EditAccountAdminCommand request, CancellationToken cancellationToken)
@@ -31,13 +30,13 @@ public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCo
         var lowerEmail = request.Email.ToLower();
 
         if (adm is null)
-            return Result.Fail(new ApplicationError("User doesn't exists."));
+            return Result.Fail(new ApplicationError("User doesn't exist."));
 
-        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken))
+        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
         if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
-            return Result.Fail(new ApplicationError("Email aleaready used."));
+            return Result.Fail(new ApplicationError("Email already used."));
 
         if (request.Password is not null)
         {

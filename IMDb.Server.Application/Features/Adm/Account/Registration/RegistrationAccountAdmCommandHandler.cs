@@ -8,7 +8,7 @@ using IMDb.Server.Domain.Entities;
 
 namespace IMDb.Server.Application.Features.Adm.Account.Registration;
 
-public class RegistrationAccountAdmCommandHandler : IRequestHandler<RegistrationAccountAdmCommand, Result>
+public class RegistrationAccountAdmCommandHandler : IRequestHandler<RegistrationAccountAdmCommand, Result<RegistrationAccountAdmCommandResponse>>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IAdminRepository adminRepository;
@@ -21,7 +21,7 @@ public class RegistrationAccountAdmCommandHandler : IRequestHandler<Registration
         this.adminRepository = adminRepository;
     }
 
-    public async Task<Result> Handle(RegistrationAccountAdmCommand request, CancellationToken cancellationToken)
+    public async Task<Result<RegistrationAccountAdmCommandResponse>> Handle(RegistrationAccountAdmCommand request, CancellationToken cancellationToken)
     {
         var lowerUsername = request.Username.ToLower();
         var lowerEmail = request.Email.ToLower();
@@ -46,6 +46,6 @@ public class RegistrationAccountAdmCommandHandler : IRequestHandler<Registration
         await adminRepository.Create(adm, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result.Ok();
+        return Result.Ok(new RegistrationAccountAdmCommandResponse(adm.Id));
     }
 }
