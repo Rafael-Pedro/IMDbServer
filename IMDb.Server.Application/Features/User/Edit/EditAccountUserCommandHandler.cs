@@ -33,7 +33,7 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
         if (user is null)
             return Result.Fail(new ApplicationError("User doesn't exists."));
 
-        if (await usersRepository.IsUniqueUsername(lowerUsername, cancellationToken))
+        if (await usersRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
         if (await usersRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
@@ -50,6 +50,7 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
         user.Username = lowerUsername;
         user.Email = lowerEmail;
 
+        usersRepository.Update(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Ok();
