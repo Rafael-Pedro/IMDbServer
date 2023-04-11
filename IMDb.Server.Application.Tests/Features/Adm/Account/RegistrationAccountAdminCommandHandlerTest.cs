@@ -50,7 +50,7 @@ public class RegistrationAccountAdminCommandHandlerTest
         var response = await handler.Handle(request, CancellationToken.None);
 
         //Assert
-        adminRepositoryMock.Verify(arm => arm.Create(adm, CancellationToken.None));
+        adminRepositoryMock.Verify(arm => arm.Create(actualAdm, CancellationToken.None));
         unitOfWorkMock.VerifyAll();
 
         Assert.True(response.IsSuccess);

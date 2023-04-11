@@ -17,7 +17,7 @@ public class AdminRepository : IAdminRepository
     public void Update(Admin admin)
     => context.Update(admin);
     public Task<Admin?> GetById(int id, CancellationToken cancellationToken)
-        => context.Admins.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+        => context.Admins.AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
     => await context.Admins.AnyAsync(a => a.Email == email, cancellationToken) is false;
 

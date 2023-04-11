@@ -110,13 +110,6 @@ namespace IMDb.Server.Application.Tests.Features.Adm.Account
             var salt = Array.Empty<byte>();
             var passwordCryptograph = Array.Empty<byte>();
 
-            var adm = new Admin
-            {
-                IsActive = true,
-                PasswordHash = passwordCryptograph,
-                PasswordHashSalt = salt
-            };
-
             var request = new LoginAccountAdmCommand("testName", "testPassword");
 
             var handler = new LoginAccountAdmCommandHandler(adminRepositoryMock.Object, tokenServiceMock.Object, cryptographyServiceMock.Object);
