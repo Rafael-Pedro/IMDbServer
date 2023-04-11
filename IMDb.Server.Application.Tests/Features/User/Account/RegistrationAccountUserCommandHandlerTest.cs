@@ -9,16 +9,15 @@ using IMDb.Server.Infra.Database.Abstraction.Respositories;
 
 namespace IMDb.Server.Application.Tests.Features.User.Account;
 
-public class RegistrationUserCommandHandlerTest
+public class RegistrationAccountUserCommandHandlerTest
 {
     private readonly RegistrationAccountUserCommandHandler sut;
     private readonly IUnitOfWork unitOfWorkMock = Substitute.For<IUnitOfWork>();
     private readonly IUsersRepository usersRepositoryMock = Substitute.For<IUsersRepository>();
     private readonly ICryptographyService cryptoGraphyServiceMock = Substitute.For<ICryptographyService>();
 
-    public RegistrationUserCommandHandlerTest()
-        => sut = new(unitOfWorkMock, cryptoGraphyServiceMock, usersRepositoryMock);
-
+    public RegistrationAccountUserCommandHandlerTest()
+    => sut = new(unitOfWorkMock, cryptoGraphyServiceMock, usersRepositoryMock);
 
     [Fact]
     public async Task Handle_WhenEmailAndUsername_ShouldRegisterUser()

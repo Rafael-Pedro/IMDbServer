@@ -1,12 +1,11 @@
 ﻿using Xunit;
 using NSubstitute;
+using IMDb.Server.Domain.Entities;
+using IMDb.Server.Application.Extension;
 using IMDb.Server.Application.Services.Token;
+using IMDb.Server.Application.Features.User.Login;
 using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
-using IMDb.Server.Domain.Entities;
-using IMDb.Server.Application.Features.User.Login;
-using IMDb.Server.Application.Extension;
-using IMDb.Server.Application.Features.Adm.Account.Login;
 
 namespace IMDb.Server.Application.Tests.Features.User.Account;
 
@@ -54,6 +53,8 @@ public class LoginAccountUserCommandHandlerTest
         //Assert
         Assert.True(response.IsSuccess);
         Assert.Empty(response.Errors);
+        Assert.Equal(token, response.Value.Token);
+        Assert.Equal(refreshToken, response.Value.RefreshToken);
     }
 
     [Fact]
@@ -77,9 +78,6 @@ public class LoginAccountUserCommandHandlerTest
     {
         //Arrange
         var lowerUsername = "testName".ToLower();
-
-        var salt = Array.Empty<byte>();
-        var passwordCryptograph = Array.Empty<byte>();
 
         var user = new Users
         {
@@ -106,13 +104,6 @@ public class LoginAccountUserCommandHandlerTest
         //Arrange
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
-
-        var adm = new Admin
-        {
-            IsActive = true,
-            PasswordHash = passwordCryptograph,
-            PasswordHashSalt = salt
-        };
 
         var request = new LoginAccountUserCommand("testName", "testPassword");
 
