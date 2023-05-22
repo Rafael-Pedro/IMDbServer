@@ -7,7 +7,6 @@ using IMDb.Server.Infra.Database.Abstraction.Respositories;
 using IMDb.Server.Domain.Entities;
 using IMDb.Server.Application.Features.Adm.Account.Edit;
 using IMDb.Server.Application.Extension;
-using IMDb.Server.Application.Features.Adm.Account.Registration;
 
 namespace IMDb.Server.Application.Tests.Features.Adm.Account;
 

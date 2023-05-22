@@ -7,7 +7,6 @@ using IMDb.Server.Application.Services.Cryptography;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
 using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Application.Extension;
-using IMDb.Server.Application.Features.Adm.Account.Edit;
 
 namespace IMDb.Server.Application.Tests.Features.User.Account;
 
