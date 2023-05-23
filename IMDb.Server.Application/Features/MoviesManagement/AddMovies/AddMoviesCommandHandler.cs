@@ -27,14 +27,11 @@ public class AddMoviesCommandHandler : IRequestHandler<AddMoviesCommand, Result<
         if(await moviesRepository.IsUniqueName(request.Name, cancellationToken))
             return Result.Fail(new ApplicationError("Movie already registred."));
 
-        if (await genresRepository.ExistingGenders(request.Genres, cancellationToken))
+        if (await genresRepository.IsAlreadyRegistered(request.Genres, cancellationToken))
             return Result.Fail(new ApplicationError("Some genre is invalid."));
 
         if (await castRepository.IsAlreadyRegistred(request.CastActor, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Some actor doesn't exists."));
-
-        if (await castRepository.IsAlreadyRegistred(request.CastDirector, cancellationToken) is false)
-            return Result.Fail(new ApplicationError("Some director doesn't exists."));
 
         var genresMovies = request.Genres.Select(genre => new GenresMovies { GenresId = genre });
 

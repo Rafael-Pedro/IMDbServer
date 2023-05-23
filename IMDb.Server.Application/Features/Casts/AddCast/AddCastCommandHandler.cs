@@ -21,7 +21,7 @@ public class CastCommandHandler : IRequestHandler<AddCastCommand, Result<CastCom
     public async Task<Result<CastCommandResponse>> Handle(AddCastCommand request, CancellationToken cancellationToken)
     {
 
-        if (await castRepository.IsAlreadyRegistred(request.Name, cancellationToken) is true)
+        if (await castRepository.IsUniqueCast(request.Name, cancellationToken))
             return Result.Fail(new ApplicationError("Artist already exists."));
 
         var cast = new Cast

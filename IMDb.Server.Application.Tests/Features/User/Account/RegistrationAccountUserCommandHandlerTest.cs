@@ -20,7 +20,7 @@ public class RegistrationAccountUserCommandHandlerTest
     => sut = new(unitOfWorkMock, cryptoGraphyServiceMock, usersRepositoryMock);
 
     [Fact]
-    public async Task Handle_WhenEmailAndUsername_ShouldRegisterUser()
+    public async Task Handle_WhenEmailAndUsernameAreUnique_ShouldRegisterUser()
     {
         //Arrange
         var lowerUsername = "testName".ToLower();
