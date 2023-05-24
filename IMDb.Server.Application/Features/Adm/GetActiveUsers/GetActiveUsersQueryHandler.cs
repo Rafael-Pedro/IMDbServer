@@ -23,6 +23,6 @@ public class GetActiveUsersQueryHandler : IRequestHandler<GetActiveUsersQuery, R
         if (activeUsers is null)
             return Task.FromResult(Result.Ok(Enumerable.Empty<GetActiveUsersQueryResponse>()));
 
-        return Task.FromResult(Result.Ok(activeUsers.Select(au => new GetActiveUsersQueryResponse(au.Id, au.Username, au.Email))));
+        return Task.FromResult(Result.Ok(activeUsers.Select(u => new GetActiveUsersQueryResponse(u.Id, u.Username, u.Email))));
     }
 }
