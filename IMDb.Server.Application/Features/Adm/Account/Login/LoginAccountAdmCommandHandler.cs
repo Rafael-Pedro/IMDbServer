@@ -22,7 +22,7 @@ public class LoginAccountAdmCommandHandler : IRequestHandler<LoginAccountAdmComm
 
     public async Task<Result<LoginAccountAdmCommandResponse>> Handle(LoginAccountAdmCommand request, CancellationToken cancellationToken)
     {
-        var admin = await adminRepository.GetByUsername(request.Username.ToLower(), cancellationToken);
+        var admin = await adminRepository.GetByUsername(request.Username, cancellationToken);
 
         if (admin is null)
             return Result.Fail(new ApplicationError("Invalid credentials"));

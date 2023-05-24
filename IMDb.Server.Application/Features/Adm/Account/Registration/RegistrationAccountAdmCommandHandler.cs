@@ -23,13 +23,13 @@ public class RegistrationAccountAdmCommandHandler : IRequestHandler<Registration
 
     public async Task<Result<RegistrationAccountAdmCommandResponse>> Handle(RegistrationAccountAdmCommand request, CancellationToken cancellationToken)
     {
-        var lowerUsername = request.Username.ToLower();
-        var lowerEmail = request.Email.ToLower();
+        var username = request.Username;
+        var email = request.Email;
 
-        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
+        if (await adminRepository.IsUniqueUsername(username, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
-        if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
+        if (await adminRepository.IsUniqueEmail(email, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email already used."));
 
         var salt = cryptographyService.CreateSalt();
@@ -37,8 +37,8 @@ public class RegistrationAccountAdmCommandHandler : IRequestHandler<Registration
 
         var adm = new Admin
         {
-            Email = lowerEmail,
-            Username = lowerUsername,
+            Email = email,
+            Username = username,
             PasswordHashSalt = salt,
             PasswordHash = passwordCryptograph
         };

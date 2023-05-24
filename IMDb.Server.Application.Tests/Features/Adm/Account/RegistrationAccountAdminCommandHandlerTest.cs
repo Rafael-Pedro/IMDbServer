@@ -19,16 +19,16 @@ public class RegistrationAccountAdminCommandHandlerTest
     public async Task Handle_WhenEmailAndUserNameAreUnique_ShouldRegisterAdmin()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
-        var lowerEmail = "testEmail@test.com".ToLower();
+        var username = "testName";
+        var email = "testEmail@test.com";
 
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
 
         var adm = new Admin
         {
-            Email = lowerEmail,
-            Username = lowerUsername,
+            Email = email,
+            Username = username,
             PasswordHashSalt = salt,
             PasswordHash = passwordCryptograph
         };
@@ -39,8 +39,8 @@ public class RegistrationAccountAdminCommandHandlerTest
 
         var handler = new RegistrationAccountAdmCommandHandler(unitOfWorkMock.Object, cryptoGraphyServiceMock.Object, adminRepositoryMock.Object);
 
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(lowerUsername, It.IsAny<CancellationToken>())).ReturnsAsync(true);
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(lowerEmail, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(true);
         adminRepositoryMock.Setup(arm => arm.Create(It.IsAny<Admin>(), It.IsAny<CancellationToken>())).Callback((Admin a, CancellationToken ct) => actualAdm = a).Returns(Task.CompletedTask);
 
         cryptoGraphyServiceMock.Setup(csm => csm.CreateSalt()).Returns(salt);
@@ -61,9 +61,9 @@ public class RegistrationAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUsernameIsNotUnique_ShouldFailRegister()
     {
-        var lowerUsername = "testNamewr".ToLower();
+        var username = "testNamewr";
 
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(lowerUsername, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new RegistrationAccountAdmCommand("testNamewr", "", "");
 
@@ -79,9 +79,9 @@ public class RegistrationAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenEmailIsNotUnique_ShouldFailRegister()
     {
-        var lowerEmail = "testEmailwr@test.com".ToLower();
+        var email = "testEmailwr@test.com";
 
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(lowerEmail, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new RegistrationAccountAdmCommand("", "testEmailwr@test.com", "");
 
