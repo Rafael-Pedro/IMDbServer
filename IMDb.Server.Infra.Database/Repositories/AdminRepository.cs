@@ -19,15 +19,15 @@ public class AdminRepository : IAdminRepository
     public Task<Admin?> GetById(int id, CancellationToken cancellationToken)
         => context.Admins.AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
-    => await context.Admins.AnyAsync(a => a.Email == email, cancellationToken) is false;
+    => await context.Admins.AnyAsync(a => a.Email.ToLower() == email.ToLower(), cancellationToken);
 
     public async Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken)
-    => await context.Admins.AnyAsync(a => a.Username == username, cancellationToken) is false;
+    => await context.Admins.AnyAsync(a => a.Username.ToLower() == username.ToLower(), cancellationToken);
 
     public Task<Admin?> GetByUsername(string username, CancellationToken cancellationToken)
-    => context.Admins.FirstOrDefaultAsync(a => a.Username == username, cancellationToken);
+    => context.Admins.FirstOrDefaultAsync(a => a.Username.ToLower() == username.ToLower(), cancellationToken);
 
     public Task<Admin?> GetByEmail(string email, CancellationToken cancellationToken)
-    => context.Admins.FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
+    => context.Admins.FirstOrDefaultAsync(a => a.Email.ToLower() == email.ToLower(), cancellationToken);
 
 }

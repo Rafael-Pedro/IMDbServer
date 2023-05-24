@@ -24,16 +24,16 @@ public class UsersRepository : IUsersRepository
         => context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 
     public Task<Users?> GetByEmail(string email, CancellationToken cancellationToken)
-        => context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+        => context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower(), cancellationToken);
 
     public Task<Users?> GetByName(string name, CancellationToken cancellationToken)
-        => context.Users.FirstOrDefaultAsync(u => u.Username == name, cancellationToken);
+        => context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == name.ToLower(), cancellationToken);
 
     public async Task<bool> IsUniqueEmail(string email, CancellationToken cancellationToken)
-        => await context.Users.AnyAsync(u => u.Email == email, cancellationToken) is false;
+        => await context.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower(), cancellationToken) is false;
 
     public async Task<bool> IsUniqueUsername(string username, CancellationToken cancellationToken)
-        => await context.Users.AnyAsync(u => u.Username == username, cancellationToken) is false;
+        => await context.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower(), cancellationToken) is false;
 
     public void Update(Users users)
         => context.Update(users);

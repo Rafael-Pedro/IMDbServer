@@ -8,8 +8,7 @@ public interface ICastRepository
     void Delete(Cast cast);
     void Update(Cast cast);
     Task<Cast?> GetById(int id, CancellationToken cancellationToken);
-    Task<Cast?> GetByName(string name, CancellationToken cancellationToken);
-    Task<CastActMovies?> GetByMovie(int id, CancellationToken cancellationToken);
+    IEnumerable<Cast> GetAll();
     Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken);
-    Task<bool> IsAlreadyRegistred(string name, CancellationToken cancellationToken);
+    Task<bool> IsUniqueCast(string name, CancellationToken cancellationToken);
 }

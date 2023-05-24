@@ -1,5 +1,6 @@
 ﻿using IMDb.Server.Domain.Entities;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMDb.Server.Infra.Database.Repositories;
 
@@ -20,23 +21,15 @@ public class CastRepository : ICastRepository
     {
         throw new NotImplementedException();
     }
-
-    public Task<CastActMovies?> GetByMovie(int id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Cast?> GetByName(string name, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
+    public IEnumerable<Cast> GetAll()
+    => context.Casts;
     public Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
+    => context.Casts.AnyAsync(g => id.Contains(g.Id), cancellationToken);
 
-    public Task<bool> IsAlreadyRegistred(string name, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
+    public async Task<bool> IsUniqueCast(string name, CancellationToken cancellationToken)
+    => await context.Casts.AnyAsync(n => n.Name.ToLower() == name.ToLower(), cancellationToken);
 
     public void Update(Cast cast)
-    => throw new NotImplementedException();
+    => context.Update(cast);
+
 }
