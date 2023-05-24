@@ -61,9 +61,7 @@ public class RegistrationAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUsernameIsNotUnique_ShouldFailRegister()
     {
-        var username = "testNamewr";
-
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername("testNamewr", It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new RegistrationAccountAdmCommand("testNamewr", "", "");
 
@@ -79,9 +77,7 @@ public class RegistrationAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenEmailIsNotUnique_ShouldFailRegister()
     {
-        var email = "testEmailwr@test.com";
-
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail("testEmailwr@test.com", It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new RegistrationAccountAdmCommand("", "testEmailwr@test.com", "");
 

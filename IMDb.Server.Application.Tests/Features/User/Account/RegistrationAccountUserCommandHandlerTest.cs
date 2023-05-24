@@ -23,16 +23,16 @@ public class RegistrationAccountUserCommandHandlerTest
     public async Task Handle_WhenEmailAndUsernameAreUnique_ShouldRegisterUser()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
-        var lowerEmail = "testEmail@test.com".ToLower();
+        var username = "testName";
+        var email = "testEmail@test.com";
 
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
 
         var user = new Users
         {
-            Email = lowerEmail,
-            Username = lowerUsername,
+            Email = email,
+            Username = username,
             PasswordHashSalt = salt,
             PasswordHash = passwordCryptograph
         };
@@ -41,8 +41,8 @@ public class RegistrationAccountUserCommandHandlerTest
 
         var request = new RegistrationAccountUserCommand("testName", "testEmail@test.com", "testPassword");
 
-        usersRepositoryMock.IsUniqueUsername(lowerUsername, Arg.Any<CancellationToken>()).Returns(true);
-        usersRepositoryMock.IsUniqueEmail(lowerEmail, Arg.Any<CancellationToken>()).Returns(true);
+        usersRepositoryMock.IsUniqueUsername(username, Arg.Any<CancellationToken>()).Returns(true);
+        usersRepositoryMock.IsUniqueEmail(email, Arg.Any<CancellationToken>()).Returns(true);
         usersRepositoryMock.Create(Arg.Do<Users>(u => actualUser = u), Arg.Any<CancellationToken>()).Returns(Task.CompletedTask);
 
         cryptoGraphyServiceMock.CreateSalt().Returns(salt);
@@ -62,9 +62,8 @@ public class RegistrationAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUsernameIsNotUnique_ShouldFailRegister()
     {
-        var lowerUsername = "testNamewr".ToLower();
 
-        usersRepositoryMock.IsUniqueUsername(lowerUsername, Arg.Any<CancellationToken>()).Returns(false);
+        usersRepositoryMock.IsUniqueUsername("testNamewr", Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new RegistrationAccountUserCommand("testNamewr", "", "");
 
@@ -78,9 +77,8 @@ public class RegistrationAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenEmailIsNotUnique_ShouldFailRegister()
     {
-        var lowerEmail = "testNamewr@gmail.com".ToLower();
 
-        usersRepositoryMock.IsUniqueEmail(lowerEmail, Arg.Any<CancellationToken>()).Returns(false);
+        usersRepositoryMock.IsUniqueEmail("testNamewr@gmail.com", Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new RegistrationAccountUserCommand("", "testNamewr@gmail.com", "");
 

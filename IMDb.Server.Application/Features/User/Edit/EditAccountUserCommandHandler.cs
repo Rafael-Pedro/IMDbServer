@@ -25,15 +25,17 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
 
     public async Task<Result> Handle(EditAccountUserCommand request, CancellationToken cancellationToken)
     {
+        var username = request.Username;
+        var email = request.Email;
         var user = await usersRepository.GetById(userInfo.Id, cancellationToken);
 
         if (user is null)
             return Result.Fail(new ApplicationError("User doesn't exists."));
 
-        if (await usersRepository.IsUniqueUsername(request.Username, cancellationToken) is false)
+        if (await usersRepository.IsUniqueUsername(username, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
-        if (await usersRepository.IsUniqueEmail(request.Email, cancellationToken) is false)
+        if (await usersRepository.IsUniqueEmail(email, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email aleaready used."));
 
         if (request.Password is not null)
@@ -44,8 +46,8 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
             user.PasswordHashSalt = salt;
         }
 
-        user.Username = request.Username;
-        user.Email = request.Email;
+        user.Username = username;
+        user.Email = email;
 
         usersRepository.Update(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

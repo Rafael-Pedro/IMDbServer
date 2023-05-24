@@ -75,9 +75,7 @@ public class EditAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenAdminIsNotNullAndUsernameIsNotUnique_ShouldFailEdit()
     {
-        var username = "testNamewr";
-
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername("testNamewr", It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new EditAccountAdminCommand("testNamewr", "", "");
 
@@ -93,9 +91,7 @@ public class EditAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenAdminIsNotNullUsernameUniqueAndEmailNotUnique_ShouldFailEdit()
     {
-        var email = "testEmailwr@test.com";
-
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail("testEmailwr@test.com", It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new EditAccountAdminCommand("", "testEmailwr@test.com", "");
 

@@ -75,9 +75,7 @@ public class EditAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUserIsNotNullAndUsernameIsNotUnique_ShouldFailEdit()
     {
-        var username = "testNamewr";
-
-        usersRepositoryMock.IsUniqueUsername(username, Arg.Any<CancellationToken>()).Returns(false);
+      usersRepositoryMock.IsUniqueUsername("testNamewr", Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new EditAccountUserCommand("testNamewr", "", "");
 
@@ -91,9 +89,7 @@ public class EditAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUserIsNotNullUsernameUniqueAndEmailNotUnique_ShouldFailEdit()
     {
-        var email = "testEmailwr@test.com";
-
-        usersRepositoryMock.IsUniqueEmail(email, Arg.Any<CancellationToken>()).Returns(false);
+        usersRepositoryMock.IsUniqueEmail("testEmailwr@test.com", Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new EditAccountUserCommand("", "testEmailwr@test.com", "");
 

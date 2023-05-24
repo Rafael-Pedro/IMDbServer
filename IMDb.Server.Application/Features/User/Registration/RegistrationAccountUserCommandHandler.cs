@@ -23,13 +23,13 @@ public class RegistrationAccountUserCommandHandler : IRequestHandler<Registratio
 
     public async Task<Result<RegistrationAccountUserCommandResponse>> Handle(RegistrationAccountUserCommand request, CancellationToken cancellationToken)
     {
-        var lowerUsername = request.Username.ToLower();
-        var lowerEmail = request.Email.ToLower();
+        var username = request.Username;
+        var email = request.Email;
 
-        if (await usersRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
+        if (await usersRepository.IsUniqueUsername(username, cancellationToken) is false)
             return Result.Fail(new ApplicationError("User already exists."));
 
-        if (await usersRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
+        if (await usersRepository.IsUniqueEmail(email, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email already used."));
 
         var salt = cryptographyService.CreateSalt();
@@ -37,8 +37,8 @@ public class RegistrationAccountUserCommandHandler : IRequestHandler<Registratio
 
         var user = new Users
         {
-            Username = lowerUsername,
-            Email = lowerEmail,
+            Username = username,
+            Email = email,
             PasswordHash = passwordHash,
             PasswordHashSalt = salt
         };

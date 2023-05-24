@@ -23,8 +23,6 @@ public class LoginAccountUserCommandHandlerTest
     public async Task Handle_WhenUserIsNotNullAndPasswordIsCorrect_ShouldLoginSuccessfully()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
-
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
 
@@ -37,7 +35,7 @@ public class LoginAccountUserCommandHandlerTest
 
         var request = new LoginAccountUserCommand("testName", "testPassword");
 
-        usersRepositoryMock.GetByName(lowerUsername, Arg.Any<CancellationToken>()).Returns(user);
+        usersRepositoryMock.GetByName("testName", Arg.Any<CancellationToken>()).Returns(user);
 
         cryptographyServiceMock.Compare(passwordCryptograph, salt, request.Password).Returns(true);
 
@@ -77,7 +75,6 @@ public class LoginAccountUserCommandHandlerTest
     public async Task Handle_WhenUserIsInactive_ShouldFailLogin()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
 
         var user = new Users
         {
@@ -86,7 +83,7 @@ public class LoginAccountUserCommandHandlerTest
 
         var request = new LoginAccountUserCommand("testName", "testPassword");
 
-        usersRepositoryMock.GetByName(lowerUsername, Arg.Any<CancellationToken>()).Returns(user);
+        usersRepositoryMock.GetByName("testName", Arg.Any<CancellationToken>()).Returns(user);
 
         //Act
         var response = await sut.Handle(request, CancellationToken.None);

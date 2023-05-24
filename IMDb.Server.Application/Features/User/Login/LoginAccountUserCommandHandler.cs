@@ -21,7 +21,7 @@ public class LoginAccountUserCommandHandler : IRequestHandler<LoginAccountUserCo
 
     public async Task<Result<LoginAccountUserResponse>> Handle(LoginAccountUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await usersRepository.GetByName(request.Username.ToLower(), cancellationToken);
+        var user = await usersRepository.GetByName(request.Username, cancellationToken);
 
         if (user is null)
             return Result.Fail(new ApplicationError("User doesn't exists"));

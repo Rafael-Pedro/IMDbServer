@@ -77,8 +77,6 @@ namespace IMDb.Server.Application.Tests.Features.Adm.Account
         public async Task Handle_WhenAdminIsInactive_ShouldFailLogin()
         {
             //Arrange
-            var username = "testName";
-
             var salt = Array.Empty<byte>();
             var passwordCryptograph = Array.Empty<byte>();
 
@@ -91,7 +89,7 @@ namespace IMDb.Server.Application.Tests.Features.Adm.Account
 
             var handler = new LoginAccountAdmCommandHandler(adminRepositoryMock.Object, tokenServiceMock.Object, cryptographyServiceMock.Object);
 
-            adminRepositoryMock.Setup(arm => arm.GetByUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(adm);
+            adminRepositoryMock.Setup(arm => arm.GetByUsername("testName", It.IsAny<CancellationToken>())).ReturnsAsync(adm);
 
             //Act
             var response = await handler.Handle(request, CancellationToken.None);
