@@ -27,16 +27,13 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
     {
         var user = await usersRepository.GetById(userInfo.Id, cancellationToken);
 
-        var lowerUsername = request.Username.ToLower();
-        var lowerEmail = request.Email.ToLower();
-
         if (user is null)
             return Result.Fail(new ApplicationError("User doesn't exists."));
 
-        if (await usersRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
+        if (await usersRepository.IsUniqueUsername(request.Username, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
-        if (await usersRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
+        if (await usersRepository.IsUniqueEmail(request.Email, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email aleaready used."));
 
         if (request.Password is not null)
@@ -47,8 +44,8 @@ public class EditAccountUserCommandHandler : IRequestHandler<EditAccountUserComm
             user.PasswordHashSalt = salt;
         }
 
-        user.Username = lowerUsername;
-        user.Email = lowerEmail;
+        user.Username = request.Username;
+        user.Email = request.Email;
 
         usersRepository.Update(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);

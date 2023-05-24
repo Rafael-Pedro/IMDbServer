@@ -26,16 +26,13 @@ public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCo
     {
         var adm = await adminRepository.GetById(userInfo.Id, cancellationToken);
 
-        var lowerUsername = request.Username.ToLower();
-        var lowerEmail = request.Email.ToLower();
-
         if (adm is null)
             return Result.Fail(new ApplicationError("User doesn't exist."));
 
-        if (await adminRepository.IsUniqueUsername(lowerUsername, cancellationToken) is false)
+        if (await adminRepository.IsUniqueUsername(request.Username, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Username already used."));
 
-        if (await adminRepository.IsUniqueEmail(lowerEmail, cancellationToken) is false)
+        if (await adminRepository.IsUniqueEmail(request.Email, cancellationToken) is false)
             return Result.Fail(new ApplicationError("Email already used."));
 
         if (request.Password is not null)
@@ -46,8 +43,8 @@ public class EditAccountAdminCommandHandler : IRequestHandler<EditAccountAdminCo
             adm.PasswordHash = passwordCrypt;
         }
 
-        adm.Username = lowerUsername;
-        adm.Email = lowerEmail;
+        adm.Username = request.Username;
+        adm.Email = request.Email;
 
         adminRepository.Update(adm);
 

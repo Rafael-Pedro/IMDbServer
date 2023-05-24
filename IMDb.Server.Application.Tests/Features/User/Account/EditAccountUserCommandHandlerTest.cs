@@ -25,16 +25,16 @@ public class EditAccountUserCommandHandlerTest
     public async Task Handle_WhenUserAndPasswordIsNotNullAndUsernameAndEmailAreUnique_ShouldEditSuccessfully()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
-        var lowerEmail = "testEmail@gmail.com".ToLower();
+        var username = "testName";
+        var email = "testEmail@gmail.com";
 
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
 
         var user = new Users
         {
-            Username = lowerUsername,
-            Email = lowerEmail,
+            Username = username,
+            Email = email,
             PasswordHashSalt = salt,
             PasswordHash = passwordCryptograph
         };
@@ -44,8 +44,8 @@ public class EditAccountUserCommandHandlerTest
         userInfoMock.Id.Returns(1);
 
         usersRepositoryMock.GetById(1, Arg.Any<CancellationToken>()).Returns(user);
-        usersRepositoryMock.IsUniqueUsername(lowerUsername, Arg.Any<CancellationToken>()).Returns(true);
-        usersRepositoryMock.IsUniqueEmail(lowerEmail, Arg.Any<CancellationToken>()).Returns(true);
+        usersRepositoryMock.IsUniqueUsername(username, Arg.Any<CancellationToken>()).Returns(true);
+        usersRepositoryMock.IsUniqueEmail(email, Arg.Any<CancellationToken>()).Returns(true);
 
         //Act
         var response = await sut.Handle(request, CancellationToken.None);
@@ -75,9 +75,9 @@ public class EditAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUserIsNotNullAndUsernameIsNotUnique_ShouldFailEdit()
     {
-        var lowerUsername = "testNamewr".ToLower();
+        var username = "testNamewr";
 
-        usersRepositoryMock.IsUniqueUsername(lowerUsername, Arg.Any<CancellationToken>()).Returns(false);
+        usersRepositoryMock.IsUniqueUsername(username, Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new EditAccountUserCommand("testNamewr", "", "");
 
@@ -91,9 +91,9 @@ public class EditAccountUserCommandHandlerTest
     [Fact]
     public async Task Handle_WhenUserIsNotNullUsernameUniqueAndEmailNotUnique_ShouldFailEdit()
     {
-        var lowerEmail = "testEmailwr@test.com".ToLower();
+        var email = "testEmailwr@test.com";
 
-        usersRepositoryMock.IsUniqueEmail(lowerEmail, Arg.Any<CancellationToken>()).Returns(false);
+        usersRepositoryMock.IsUniqueEmail(email, Arg.Any<CancellationToken>()).Returns(false);
 
         var request = new EditAccountUserCommand("", "testEmailwr@test.com", "");
 

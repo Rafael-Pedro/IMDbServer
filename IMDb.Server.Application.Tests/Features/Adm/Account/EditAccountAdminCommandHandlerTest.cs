@@ -21,16 +21,16 @@ public class EditAccountAdminCommandHandlerTest
     public async Task Handle_WhenAdminAndPasswordIsNotNullAndUsernameAndEmailAreUnique_ShouldEditSuccessfully()
     {
         //Arrange
-        var lowerUsername = "testName".ToLower();
-        var lowerEmail = "testEmail@gmail.com".ToLower();
+        var username = "testName";
+        var email = "testEmail@gmail.com";
 
         var salt = Array.Empty<byte>();
         var passwordCryptograph = Array.Empty<byte>();
 
         var adm = new Admin
         {
-            Username = lowerUsername,
-            Email = lowerEmail,
+            Username = username,
+            Email = email,
             PasswordHashSalt = salt,
             PasswordHash = passwordCryptograph
         };
@@ -42,8 +42,8 @@ public class EditAccountAdminCommandHandlerTest
         userInfoMock.Setup(uim => uim.Id).Returns(1);
 
         adminRepositoryMock.Setup(arm => arm.GetById(1, It.IsAny<CancellationToken>())).ReturnsAsync(adm);
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(lowerUsername, It.IsAny<CancellationToken>())).ReturnsAsync(true);
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(lowerEmail, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
         //Act
         var response = await handler.Handle(request, CancellationToken.None);
@@ -75,9 +75,9 @@ public class EditAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenAdminIsNotNullAndUsernameIsNotUnique_ShouldFailEdit()
     {
-        var lowerUsername = "testNamewr".ToLower();
+        var username = "testNamewr";
 
-        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(lowerUsername, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueUsername(username, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new EditAccountAdminCommand("testNamewr", "", "");
 
@@ -93,9 +93,9 @@ public class EditAccountAdminCommandHandlerTest
     [Fact]
     public async Task Handle_WhenAdminIsNotNullUsernameUniqueAndEmailNotUnique_ShouldFailEdit()
     {
-        var lowerEmail = "testEmailwr@test.com".ToLower();
+        var email = "testEmailwr@test.com";
 
-        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(lowerEmail, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+        adminRepositoryMock.Setup(arm => arm.IsUniqueEmail(email, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
         var request = new EditAccountAdminCommand("", "testEmailwr@test.com", "");
 
