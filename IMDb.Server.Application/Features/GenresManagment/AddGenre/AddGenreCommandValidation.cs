@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
-namespace IMDb.Server.Application.Features.GenresManagment.AddGenre
+namespace IMDb.Server.Application.Features.GenresManagment.AddGenre;
+
+public class AddGenreCommandValidation : AbstractValidator<AddGenreCommand>
 {
-    internal class AddGenreCommandValidation
-    {
-    }
+	public AddGenreCommandValidation()
+	{
+		RuleFor(rf => rf.Genre).NotEmpty().MaximumLength(50);
+	}
 }

@@ -9,24 +9,19 @@ public class GenresRepository : IGenresRepository
     private readonly IMDbContext context;
 
     public GenresRepository(IMDbContext context)
-    {
-        this.context = context;
-    }
-
-    public Task<Genres> Create(Genres genres, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-    public void Delete(Genres genres)
-    {
-        throw new NotImplementedException();
-    }
-    public IEnumerable<Genres> GetAll()
-    => context.Genres;
-    public Task<bool> ExistingGenders(IEnumerable<int> id, CancellationToken cancellationToken)
-    => context.Genres.AnyAsync(g => id.Contains(g.Id), cancellationToken);
+      => this.context = context;
+    public async Task Create(Genres genres, CancellationToken cancellationToken)
+        => await context.Genres.AddAsync(genres, cancellationToken);
     public void Update(Genres genres)
-    {
-        throw new NotImplementedException();
-    }
+        => context.Genres.Update(genres);
+    public void Delete(Genres genres)
+        => context.Genres.Remove(genres);
+    public IEnumerable<Genres> GetAll()
+        => context.Genres;
+    public Task<bool> IsAlreadyRegistered(IEnumerable<int> id, CancellationToken cancellationToken)
+        => context.Genres.AnyAsync(g => id.Contains(g.Id), cancellationToken);
+
+    public async Task<bool> IsUniqueGenre(string name, CancellationToken cancellationToken)
+       => await context.Genres.AnyAsync(n => n.Name.ToLower() == name.ToLower(), cancellationToken);
+
 }

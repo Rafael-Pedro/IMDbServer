@@ -3,4 +3,6 @@ using FluentResults;
 
 namespace IMDb.Server.Application.Features.GenresManagment.AddGenre;
 
-public record AddGenreCommand():IRequest<Result<AddGenreCommandResponse>>;
+public record AddGenreCommand(
+   string Genre
+) : IRequest<Result<AddGenreCommandResponse>>;
