@@ -1,5 +1,7 @@
 ﻿using IMDb.Server.Domain.Entities;
+using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
+using IMDb.Server.Infra.Database.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMDb.Server.Infra.Database.Repositories;
@@ -17,12 +19,10 @@ public class CastRepository : ICastRepository
     public void Delete(Cast cast)
     => context.Casts.Remove(cast);
 
-    public Task<Cast?> GetById(int id, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-    public IEnumerable<Cast> GetAll()
-    => context.Casts;
+    public async Task<Cast?> GetById(int id, CancellationToken cancellationToken)
+    => await context.Casts.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+    public IEnumerable<Cast> GetAll(PaginatedQueryOptions paginatedQuery)
+    => context.Casts.PaginateAndOrder(paginatedQuery, c => c.Name);
     public Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken)
     => context.Casts.AnyAsync(g => id.Contains(g.Id), cancellationToken);
 

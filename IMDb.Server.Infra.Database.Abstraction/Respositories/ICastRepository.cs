@@ -8,7 +8,7 @@ public interface ICastRepository
     void Delete(Cast cast);
     void Update(Cast cast);
     Task<Cast?> GetById(int id, CancellationToken cancellationToken);
-    IEnumerable<Cast> GetAll();
+    IEnumerable<Cast> GetAll(PaginatedQueryOptions paginatedQuery);
     Task<bool> IsAlreadyRegistred(IEnumerable<int> id, CancellationToken cancellationToken);
     Task<bool> IsUniqueCast(string name, CancellationToken cancellationToken);
 }

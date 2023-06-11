@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using FluentResults;
-using IMDb.Server.Application.UserInfo;
 using IMDb.Server.Infra.Database.Abstraction;
 using IMDb.Server.Infra.Database.Abstraction.Respositories;
 using IMDb.Server.Application.Extension;
@@ -24,6 +23,9 @@ public class EditCastCommandHandler : IRequestHandler<EditCastCommand, Result>
 
         if (cast is null)
             return Result.Fail(new ApplicationError("Artist doesn't exists"));
+
+        if (await castRepository.IsUniqueCast(request.Name, cancellationToken) is false)
+            return Result.Fail(new ApplicationError("Name already used"));
 
         cast.Name = request.Name ?? cast.Name;
         cast.Description = request.Description ?? cast.Description;
